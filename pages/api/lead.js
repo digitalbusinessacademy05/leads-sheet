@@ -4,7 +4,9 @@ const { GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY } = process.env;
 
 export default async function handler(req, res) {
   try {
-    if (req.method !== 'POST') {
+    if(req.method === 'OPTIONS') {
+      return res.status(200).end();
+    } else if (req.method !== 'POST') {
       return res.status(404).json({ error: 'Not found' });
     }
   
@@ -30,6 +32,7 @@ export default async function handler(req, res) {
   
     res.status(201).json({ lead: true });
   } catch(err) {
+    console.error(err);
     res.status(500).json(err);
   }
 }
